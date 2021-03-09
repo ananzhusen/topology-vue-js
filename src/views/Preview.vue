@@ -19,17 +19,16 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import Topology from 'topology-vue';
+Vue.use(Topology);
 export default {
   name: 'Preview',
-  components: {
-    Topology
-  },
   data() {
     return {
       data: { data: {} },
       locked: 0,
-      showTools: true
+      showTools: true,
     };
   },
   created() {
@@ -60,9 +59,9 @@ export default {
       window.topology.data.locked = this.locked;
       window.topologyData = window.topology.data;
       this.$router.go(-1);
-    }
-  }
-}
+    },
+  },
+};
 </script>
 <style lang="scss" scoped>
 .preview {
