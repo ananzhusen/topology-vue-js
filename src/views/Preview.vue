@@ -22,6 +22,7 @@
 import Vue from 'vue';
 import Topology from 'topology-vue';
 Vue.use(Topology);
+import axios from 'axios';
 export default {
   name: 'Preview',
   data() {
@@ -31,7 +32,13 @@ export default {
       showTools: true,
     };
   },
+  watch: {
+    $route() {
+      this.init();
+    },
+  },
   created() {
+    this.init();
     const data = window.topologyData;
     if (data) {
       this.locked = data.locked;
@@ -59,6 +66,34 @@ export default {
       window.topology.data.locked = this.locked;
       window.topologyData = window.topology.data;
       this.$router.go(-1);
+    },
+
+    async init() {
+      if (this.$route.query.id) {
+        let ret = await axios.get('/api/topology/' + this.$route.query.id, {
+          params: {
+            version: this.$route.query.version,
+            view: 1,
+          },
+        });
+        if (ret.error) {
+          return;
+        }
+
+        if (!ret.pens) {
+          const data = ret.data;
+          delete ret.data;
+          ret = Object.assign(ret, data);
+        }
+        this.data = ret;
+      } else {
+        this.data = window.topologyData || {};
+        setTimeout(() => {
+          window.topologyData = null;
+        }, 200);
+      }
+
+      this.showTools = !!this.$route.query.r;
     },
   },
 };
