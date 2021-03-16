@@ -76,7 +76,7 @@ export default {
       materials: {
         system: [],
         user: [],
-        uploadUrl: '/api/file',
+        uploadUrl: '/api/image',
         uploadHeaders: {
           Authorization: 'your token',
         },
