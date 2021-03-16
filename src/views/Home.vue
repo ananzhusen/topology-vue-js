@@ -6,16 +6,15 @@
 </template>
 
 <script>
+import Vue from "vue";
 // 导入topology-vue组件
 import topology from "topology-vue";
 // 需要导入topology-vue.css
 import "topology-vue/topology-vue.css";
+Vue.use(topology);
 
 export default {
   name: "Home",
-  components: {
-    topology,
-  },
   data: function () {
     return {
       topologyConfigs: {
