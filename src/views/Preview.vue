@@ -26,7 +26,7 @@ export default {
   name: 'Preview',
   data() {
     return {
-      data: { data: {} },
+      data: {},
       locked: 0,
       showTools: true,
     };
@@ -36,7 +36,7 @@ export default {
     if (data) {
       this.locked = data.locked;
       data.locked = 1;
-      this.$set(this.data, 'data', Object.assign({}, data));
+      this.data = Object.assign({}, data);
       setTimeout(() => {
         window.topologyData = null;
       }, 200);
