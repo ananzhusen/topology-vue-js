@@ -296,6 +296,10 @@ export default {
           // Do sth.
           break;
 
+        case 't-topology-folder-open': // 打开文件夹
+          this.openFolder(e.params);
+          break;
+
         case 'addMaterial':
           // 添加“我的组件”
           // Do sth. For example:
@@ -347,6 +351,38 @@ export default {
 
         // ...
         // ...
+      }
+    },
+    async openFolder(params) {
+      const rep = await axios.get('/api/user/topologies', {
+        params: {
+          folder: params.folder,
+          component: params.component,
+          pageIndex: 1,
+          pageCount: 100,
+        },
+      });
+      // 对数据进行调整
+      if (params.component) {
+        // 组件
+        let userFolder = this.materials.user?.find((item) => {
+          return item.name === params.folder;
+        });
+        if (userFolder) {
+          // 存在该文件夹，且数据不为空
+          userFolder.list = rep.list ? rep.list : [];
+          userFolder.loading = false;
+        }
+      } else {
+        // 图纸
+        let topologyFolder = this.materials.topology?.find(
+          (item) => item.name === params.folder
+        );
+        if (topologyFolder) {
+          // 存在该文件夹，且数据不为空
+          topologyFolder.list = rep.list ? rep.list : [];
+          topologyFolder.loading = false;
+        }
       }
     },
     async addTopologyFolder(name) {
