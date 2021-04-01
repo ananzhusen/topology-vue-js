@@ -22,7 +22,6 @@ import {
   defalutMenus,
   defalutUserMenus,
   defalutMaterials,
-  userMaterials,
   images,
 } from './data';
 
@@ -74,7 +73,7 @@ export default {
       },
       materials: {
         system: defalutMaterials,
-        user: userMaterials,
+        user: [],
         images,
         uploadUrl: '/api/file',
         uploadHeaders: {
