@@ -55,6 +55,12 @@ export const defalutUserMenus = [
 
 export const defalutMaterials = [
   {
+    name: '企业图形库',
+    expand: true,
+    show: true,
+    list: []
+  },
+  {
     name: '基本形状',
     expand: true,
     show: true,

@@ -98,6 +98,22 @@ export default {
       // Do sth.
     }
   },
+  mounted() {
+    // 请确保 7777777(类似数字).js 和 rg.js已下载，正确加载
+    if (window.registerTools) {
+      window.registerTools();
+      this.materials.system[0].list = this.materials.system[0].list.concat(
+        window.topologyTools.map((el, index) => {
+          return {
+            data: el.data,
+            id: index,
+            name: 'rectangle',
+            icon: 't-icon t-rectangle',
+          };
+        })
+      );
+    }
+  },
   methods: {
     onEvent(e) {
       switch (e.name) {
