@@ -74,6 +74,7 @@ export default {
         username: 'le5le',
       },
       materials: {
+        topology: [],
         system: [],
         user: [],
         uploadUrl: '/api/image',
