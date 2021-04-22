@@ -87,21 +87,23 @@ export default {
     };
   },
   created: function () {
-    const data = window.topologyData;
-    // 存在缓存数据，预览页返回
-    if (data) {
-      this.data = { data: Object.assign({}, data) };
-      setTimeout(() => {
-        window.topologyData = null;
-      }, 200);
-    } else {
-      // Do sth.
-    }
+   
   },
   mounted() {
     // 请确保 7777777(类似数字).js 和 rg.js已下载，正确加载
     if (window.registerTools) {
       window.registerTools();
+
+      //确保从预览页面返回是时清空存储
+        const json = sessionStorage.getItem('topologyData');
+        if (!this.$route.query.id && json) {
+          this.data = JSON.parse(json);
+          setTimeout(() => {
+            // 读到后清除对应 session
+            sessionStorage.removeItem('topologyData');
+          }, 200);
+        }
+        
       this.materials.system[0].list = this.materials.system[0].list.concat(
         window.topologyTools.map((el, index) => {
           return {
@@ -166,8 +168,10 @@ export default {
         case 'preview':
           // 点击工具栏“预览”
 
-          // 保存当前编辑数据，方便预览时直接打开
-          window.topologyData = window.topology.data;
+           // 点击工具栏“预览”
+
+          // 保存当前编辑数据到sessionStorage
+          sessionStorage.setItem('topologyData',JSON.stringify(window.topology.pureData()));
           this.$router.push({
             path: '/preview',
             query: { id: 'xxx', r: '1' },

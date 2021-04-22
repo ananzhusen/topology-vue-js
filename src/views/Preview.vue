@@ -32,16 +32,12 @@ export default {
     };
   },
   created() {
-    const data = window.topologyData;
-    if (data) {
-      this.locked = data.locked;
-      data.locked = 1;
-      this.data = Object.assign({}, data);
-      setTimeout(() => {
-        window.topologyData = null;
-      }, 200);
-    } else {
-      // Do sth.
+    //获取存储数据
+    const data = sessionStorage.getItem('topologyData');
+    if(data){
+      this.data = JSON.parse(data);
+    }else{
+      //
     }
 
     this.showTools = !!this.$route.query.r;
@@ -56,8 +52,6 @@ export default {
     },
 
     onBack() {
-      window.topology.data.locked = this.locked;
-      window.topologyData = window.topology.data;
       this.$router.go(-1);
     },
   },
